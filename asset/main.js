@@ -65,6 +65,15 @@ function sendDataSignup(data, callback) {
 	})
 }
 
+function getArticle(callback) {
+	fetch(API + '/api/Article')
+	.then(response => response.json())
+	.then(callback)
+	.catch(error => {
+		console.error('There has been a problem with your fetch operation:', error);
+	})
+}
+
 function reset() {
 	document.getElementById('email-login').value = ''
 	document.getElementById('pass-login').value = ''
@@ -82,13 +91,15 @@ function checkLog(response) {
 	else if(passInput.trim().length === 0) {
 		document.querySelector('.pass-err').innerHTML = 'Bắt buộc nhập'
 	}
-	else if(response.Message === "") {											//sửa
+	else if(response.Message === "Tài khoản hoặc mật khẩu không chính xác.") {											//sửa
 		document.querySelector('.pass-err').innerHTML = 'Tài khoản hoặc mật khẩu không đúng'
 		reset()
 	}
 	else {
+		hidenSignin()
+		document.querySelector('.header__log-block').innerHTML = '<button class="js-log-Btn info-Btn"></button><button class="js-log-Btn">Logout</button><div class="search-btn js-search"><input id="search" type="text" name="search" class="search-input" placeholder="Tìm kiếm"><div class="search-icon-block" onclick="clearSearch()"><i class="search-icon ti-search"></i></div></div>'
+		document.querySelector('.info-Btn').innerText = userInput
 		reset()
-		document.querySelector('.header__log-block').innerHTML = '<button class="js-log-Btn">${userInput}</button><button class="js-log-Btn">Logout</button><div class="search-btn js-search"><input id="search" type="text" name="search" class="search-input" placeholder="Tìm kiếm"><div class="search-icon-block" onclick="clearSearch()"><i class="search-icon ti-search"></i></div></div>'
 	}
 }
 
@@ -116,6 +127,24 @@ function checkSignup(response) {
 		hidenSignup()
 		alert('Đăng ký thành công')
 	}
+}
+
+function renderArticle(Articles) {
+	var listArticleBlock = document.querySelector('.News-list')
+	var htmls = Articles.map(function(Article) {
+		return `
+			<li>
+				<div class="item-news">
+					<a href="#" class="item-news__heading">Tieu de</a>
+					<div class="item-news__block">
+						<div class="time-post">${Article.time}</div>
+						<div class="author">${Article.author}</div>
+					</div>
+				</div>
+			</li>
+		`
+	})
+	htmls.innerHTML = htmls.join('')
 }
 
 var logBtn = document.getElementById('signin-button')
@@ -146,3 +175,10 @@ signupButton.onclick = function dataSignup() {
 	}
 	sendDataSignup(formData, checkSignup)
 }
+
+
+function start() {
+	getArticle(renderArticle)
+}
+
+start()
