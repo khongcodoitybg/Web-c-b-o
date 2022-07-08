@@ -135,7 +135,7 @@ function renderArticle(Articles) {
 		return `
 			<li class="Article-item-${Article.id}>
 				<div class="item-news">
-					<a href="#" class="item-news__heading" onclick="showArticle(${Article.id})">Tieu de</a>
+					<a href="#" class="item-news__heading" onclick="showArticle(${Article.id}, Article)">Tieu de</a>
 					<div class="item-news__block">
 						<div class="time-post">${Article.time}</div>
 						<div class="author">${Article.author}</div>
