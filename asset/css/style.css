@@ -106,9 +106,12 @@ html {
 }
 
 .logo { 
-    height: 100px;
-    padding-top: 10px;
-    margin-left: 30px;
+    
+}
+
+.logo > img {
+    
+    height: 104px;
 }
 
 .logo:hover {   
@@ -465,7 +468,7 @@ html {
     font-weight: bold;
 }
 
-.Article__heading .time-post {
+.Article__heading__time-post {
     margin-top: 10px;
     display: block;
     font-size: 1.2rem;

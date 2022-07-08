@@ -133,9 +133,9 @@ function renderArticle(Articles) {
 	var listArticleBlock = document.querySelector('.News-list')
 	var htmls = Articles.map(function(Article) {
 		return `
-			<li>
+			<li class="Article-item-${Article.id}>
 				<div class="item-news">
-					<a href="#" class="item-news__heading">Tieu de</a>
+					<a href="#" class="item-news__heading" onclick="showArticle(${Article.id})">Tieu de</a>
 					<div class="item-news__block">
 						<div class="time-post">${Article.time}</div>
 						<div class="author">${Article.author}</div>
@@ -176,6 +176,19 @@ signupButton.onclick = function dataSignup() {
 	sendDataSignup(formData, checkSignup)
 }
 
+function showArticle(id, response) {
+	document.getElementById('Home').style.display = 'none'
+	document.getElementById('Article').style.display = 'block'
+	document.querySelector('.Article__heading__title').innerHTML = response.title
+	document.querySelector('.Article__heading__time-post').innerHTML = response.time
+	document.querySelector('.Article__body--main__word').innerHTML = response.content
+	document.querySelector('.member-name').innerHTML = response.authorName
+}
+
+function showHome() {
+	document.getElementById('Home').style.display = 'block'
+	document.getElementById('Article').style.display = 'none'
+}
 
 function start() {
 	getArticle(renderArticle)
